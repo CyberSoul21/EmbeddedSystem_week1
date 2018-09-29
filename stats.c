@@ -41,3 +41,131 @@ void main() {
 }
 
 /* Add other Implementation File Code Here */
+
+void print_statistics(unsigned char *data,int lenght)
+{
+  float median = 0, mean = 0, max=0, min = 0;
+  /*Copy array in other array for change the type data char to int*/
+  /*the reason to do this is for not modificate the original array*/
+  unsigned int data_int[lenght];
+  for(int i = 0; i < lenght; i++)
+  {
+    data_int[i] = data[i];
+  }
+  median = find_median(data_int,SIZE);
+  printf("Median = %f\n",median);
+  mean = find_mean(data,SIZE);
+  printf("Mean = %f\n",mean);
+  min = find_minimum(data,SIZE);
+  printf("Minimum = %f\n",min);
+  max = find_maximum(data,SIZE);
+  printf("Maximum = %f\n",max);
+  sort_array(data,lenght);
+
+}
+
+float find_median(unsigned int *data,int lenght)
+{
+
+  int pos = 0, flag =0;
+  float m = 0, x = 0, y = 0;
+  for(int k = 0; k < lenght; k++)
+  {
+      x = data[k];
+      for(int i = k; i<lenght; i++)
+      {
+        if(data[i]<x)
+        {
+          x = data[i];
+          pos = i;
+          flag = 1;
+        }
+      }
+      if(flag == 1)
+      {
+        y = data[k];
+        data[k]=x;
+        data[pos]=y;
+        flag = 0;
+      }
+  }
+  /*check if lenght of array is odd or even*/
+  if(lenght%2 == 0){
+    float k,z;
+    k=data[((lenght)/2) - 1];
+    z=data[(lenght/2)];
+    m =  (k+z)/2;
+  }
+  else{
+  //  m = data[lenght/2 + 1];
+  }
+  return m;
+}
+float find_mean(unsigned char *data,int lenght)
+{
+  float m=0,d=0;
+  for(int i = 0; i < lenght; i++)
+  {
+    d += data[i];
+  }
+  m = d/lenght;
+  return m;
+}
+float find_maximum(unsigned char *data,int lenght)
+{
+  float max = data[0];
+  for(int i = 0; i < lenght; i++)
+  {
+    if(data[i]>max)
+    {
+      max = data[i];
+    }
+  }
+  return max;
+}
+float find_minimum(unsigned char *data,int lenght)
+{
+  float min = data[0];
+  for(int i = 0; i < lenght; i++)
+  {
+    if(data[i]<min)
+    {
+      min = data[i];
+    }
+  }
+  return min;
+}
+
+void sort_array(unsigned char *data,int lenght){
+
+  int x = 0, y = 0, pos = 0, flag =0;
+  for(int k = 0; k < lenght; k++)
+  {
+      x = data[k];
+      for(int i = k; i<lenght; i++)
+      {
+        if(data[i]>x)
+        {
+          x = data[i];
+          pos = i;
+          flag = 1;
+        }
+      }
+      if(flag == 1)
+      {
+        y = data[k];
+        data[k]=x;
+        data[pos]=y;
+        flag = 0;
+      }
+  }
+
+}
+void print_array(unsigned char *data,int lenght)
+{
+  for(int i = 0; i < lenght; i++)
+  {
+    int d = data[i];
+    printf("%d \n",d);
+  }
+}
